@@ -1,9 +1,14 @@
-import { createTheme, makeStyles, ThemeProvider } from "@mui/material/styles";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { FlightSearchBar, NavBar } from "./components";
-import styled from "@emotion/styled";
-import { coverImage, icon } from "./assets";
-import { Collapse, Typography } from "@mui/material";
+import { callUs, coverImage, icon } from "./assets";
+import { Box, Collapse, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
+import {
+  Container,
+  CoverContiainer,
+  GradiantCoverCotainer,
+} from "./components/StyledComponents";
+
 import "./App.css";
 
 const theme = createTheme({
@@ -27,24 +32,46 @@ const theme = createTheme({
     text: { main: "#000" },
   },
   typography: {
-    fontFamily: `'Oxygen', sans-serif`,
+    // fontFamily: `'Oxygen', sans-serif`,
   },
 });
 
 theme.typography.h3 = {
-  fontSize: "1.2rem",
+  // fontSize: "3rem",
   fontWeight: "100",
+  fontSize: "1.5rem",
 
-  "@media (min-width:600px)": {
+  // "@media (min-width:768px)": {
+  //   fontSize: "1.5rem",
+  // },
+  [theme.breakpoints.up("sm")]: {},
+  [theme.breakpoints.up("md")]: {
+    fontSize: "2rem",
+  },
+  [theme.breakpoints.up("xl")]: {
+    fontSize: "4rem",
+  },
+};
+
+theme.typography.h6 = {
+  // fontSize: "3rem",
+  fontWeight: "100",
+  fontSize: "1rem",
+
+  // "@media (min-width:768px)": {
+  //   fontSize: "1.5rem",
+  // },
+  [theme.breakpoints.up("sm")]: {},
+  [theme.breakpoints.up("md")]: {
     fontSize: "1.5rem",
   },
-  [theme.breakpoints.up("md")]: {
-    fontSize: "3rem",
+  [theme.breakpoints.up("xl")]: {
+    fontSize: "2rem",
   },
 };
 
 function App() {
-  const navItemNames = ["Home", "Travel Packages", "Visa", "Contact US"];
+  const navItemNames = ["Home", "Travel Packages", "Visa", "Contact Us"];
   const [checked, setChecked] = useState(false);
 
   useEffect(() => {
@@ -58,7 +85,7 @@ function App() {
             <NavBar
               title="Alam's Aviation"
               navItemNames={navItemNames}
-              icon={icon}
+              logo={icon}
             />
             <Typography variant="h3" color="#ffff" textAlign="center">
               Ready to Travel?
@@ -70,27 +97,68 @@ function App() {
           </Collapse>
         </CoverContiainer>
 
-        <Container id={navItemNames[1]} bgcolor="tomato"></Container>
+        <Container id={navItemNames[1]} bgcolor="#f5f5f5">
+          <Typography variant="h3" color="#000" textAlign="center">
+            Our Packages
+          </Typography>
+        </Container>
         <Container id={navItemNames[2]} bgcolor={"gold"}></Container>
-        <Container id={navItemNames[3]} bgcolor={"dodgerblue"}></Container>
+        <Container
+          id={navItemNames[3]}
+          bgcolor="#fffff"
+          style={{
+            position: "relative",
+          }}
+        >
+          <GradiantCoverCotainer
+            coverimage={callUs}
+            style={{ minHeight: "50vh" }}
+            size="cover"
+          >
+            <Typography variant="h3" color="#ffff" textAlign="center">
+              Get in touch?
+            </Typography>
+            <Box sx={{ m: 4 }}>
+              <Typography variant="h6" color="#ffff" textAlign="center">
+                Want to book a flight or a deal?
+              </Typography>
+              <Typography variant="h6" color="#ffff" textAlign="center">
+                We'd love to hear from you. Here's how you can reach us.
+              </Typography>
+            </Box>
+          </GradiantCoverCotainer>
+          <Box
+            sx={{
+              width: {
+                xs: 250,
+                sm: 350,
+                md: 400,
+                xl: 600,
+              },
+              height: {
+                xs: 250,
+                sm: 350,
+                md: 350,
+                xl: 600,
+              },
+              backgroundColor: "white",
+              border: "1px solid #ececec",
+              position: "absolute",
+              top: "40%",
+              marginLeft: "auto",
+              marginRight: "auto",
+              left: 0,
+              right: 0,
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></Box>
+        </Container>
       </ThemeProvider>
     </div>
   );
 }
-
-const Container = styled.div`
-  min-height: 100vh;
-  background-color: ${({ bgcolor }) => bgcolor};
-`;
-const CoverContiainer = styled(Container)`
-  background-image: url(${({ coverimage }) => (coverimage ? coverimage : "")});
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  justify-content: center;
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-`;
 
 export default App;

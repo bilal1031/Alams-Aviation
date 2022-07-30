@@ -11,12 +11,12 @@ import {
   List,
   ListItem,
   ListItemText,
-  Link,
   ListItemButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import styled from "@emotion/styled";
+
 import { useMediaQuery } from "@mui/material";
+import { CustromAppBar, GradientText } from "../StyledComponents";
 
 export default function NavBar({ logo, title, navItemNames = [] }) {
   const theme = useTheme();
@@ -24,19 +24,19 @@ export default function NavBar({ logo, title, navItemNames = [] }) {
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
-    <CustromAppBar position="fixed" color="primary">
+    <CustromAppBar position="fixed">
       <Toolbar>
         <IconButton size="large" edge="start" color="inherit" aria-label="logo">
-          <img src={logo} alt="logo" />
+          <img src={logo} alt="logo" width={50} />
         </IconButton>
 
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <GradientText variant="h6" component="div" sx={{ flexGrow: 1 }}>
           {title}
-        </Typography>
+        </GradientText>
         {!isMobile && (
           <Stack direction="row" spacing={2}>
-            {navItemNames.map((item) => (
-              <Button color="inherit" href={`#${item}`}>
+            {navItemNames.map((item, index) => (
+              <Button color="primary" href={`#${item}`} key={index}>
                 {item}
               </Button>
             ))}
@@ -47,12 +47,23 @@ export default function NavBar({ logo, title, navItemNames = [] }) {
             <SwipeableDrawer
               open={openDrawer}
               onClose={() => setOpenDrawer(false)}
+              PaperProps={{ style: { width: "60%" } }}
+              // swipeAreaWidth={40}
+              // onOpen={() => setOpenDrawer(true)}
+              disableSwipeToOpen={true}
+              anchor="right"
             >
-              <List>
-                {navItemNames.map((item) => (
-                  <ListItem onClick={() => setOpenDrawer(false)} disablePadding>
+              <List sx={{ marginTop: 5 }}>
+                {navItemNames.map((item, index) => (
+                  <ListItem
+                    onClick={() => setOpenDrawer(false)}
+                    disablePadding
+                    key={index}
+                  >
                     <ListItemButton href={`#${item}`}>
-                      <ListItemText>{item}</ListItemText>
+                      <ListItemText>
+                        <Typography color="primary">{item}</Typography>
+                      </ListItemText>
                     </ListItemButton>
                   </ListItem>
                 ))}
@@ -60,7 +71,7 @@ export default function NavBar({ logo, title, navItemNames = [] }) {
             </SwipeableDrawer>
             <IconButton
               onClick={() => setOpenDrawer(!openDrawer)}
-              color="inherit"
+              color="primary"
             >
               <MenuIcon />
             </IconButton>
@@ -70,15 +81,3 @@ export default function NavBar({ logo, title, navItemNames = [] }) {
     </CustromAppBar>
   );
 }
-
-const CustromAppBar = styled(AppBar)`
-  background: rgba(90, 90, 90, 0.1);
-  box-shadow: none;
-`;
-
-// const Typography = styled(Typography)`
-//   //   background: #9b30bf;
-//   //   background: linear-gradient(#9b30bf, #2c92ec);
-//   //   -webkit-background-clip: text;
-//   //   -webkit-text-fill-color: transparent;
-// `;
