@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import {
-  AppBar,
   Button,
   IconButton,
   Stack,
@@ -14,7 +13,6 @@ import {
   ListItemButton,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import { useMediaQuery } from "@mui/material";
 import { CustromAppBar, GradientText } from "../StyledComponents";
 
@@ -30,7 +28,12 @@ export default function NavBar({ logo, title, navItemNames = [] }) {
           <img src={logo} alt="logo" width={50} />
         </IconButton>
 
-        <GradientText variant="h6" component="div" sx={{ flexGrow: 1 }}>
+        <GradientText
+          variant="h6"
+          component="div"
+          sx={{ flexGrow: 1, fontWeight: 400 }}
+          aria-label="title"
+        >
           {title}
         </GradientText>
         {!isMobile && (
@@ -72,6 +75,7 @@ export default function NavBar({ logo, title, navItemNames = [] }) {
             <IconButton
               onClick={() => setOpenDrawer(!openDrawer)}
               color="primary"
+              aria-label="menu-button"
             >
               <MenuIcon />
             </IconButton>
